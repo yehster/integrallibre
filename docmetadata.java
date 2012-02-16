@@ -14,6 +14,6 @@ public interface docmetadata {
     public java.util.List getHeadersPatterns();
     public String getDictatorFullName();
     public String getDictatorInitials();
-    public String LookupHeaderMapping(String header);
+    public String LookupIdentiferHeaderMapping(String header);
     
 }

@@ -30,6 +30,7 @@ public class libretexthandler {
     protected Element mRoot;
     protected Element mCurrentSection;
     protected Element mCurrentHeader;
+    protected Element mPatientIdentifiers;
     public libretexthandler(com.sun.star.frame.XDesktop xDesktop, String filename)
     {
         mXTextDocument=OpenTextdocument(xDesktop,filename);
@@ -57,7 +58,7 @@ public class libretexthandler {
             {
                 DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
                 DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
-                mDOMDoc = docBuilder.newDocument();    
+                mDOMDoc = docBuilder.newDocument();   
             }
             catch(Exception e)
             {
@@ -69,7 +70,9 @@ public class libretexthandler {
             //create the root element and add it to the document
              mRoot= mDOMDoc.createElement("transcription");
              mDOMDoc.appendChild(mRoot);
-
+             mPatientIdentifiers=mDOMDoc.createElement("PatientIdentifiers");
+             mRoot.appendChild(mPatientIdentifiers);
+             
             System.out.println("create an enumeration of all paragraphs");
             // create an enumeration access of all paragraphs of a document
             com.sun.star.container.XEnumerationAccess xEnumerationAccess =
@@ -134,18 +137,24 @@ public class libretexthandler {
             mCurrentHeader=mDOMDoc.createElement("header");
             mCurrentHeader.setTextContent(mHeaderText);
             mCurrentSection.appendChild(mCurrentHeader);
-            String headerMapping=dmdMetadata.LookupHeaderMapping(mHeaderText);
-            if(headerMapping!=null)
-            {
-                mCurrentSection.setAttribute("tag", headerMapping);
-                
-            }
+            String sRestOfLine = null;
             if(sParagraph.length()>Header.end())
             {
-                String sRestOfLine=sParagraph.substring(Header.end()+1).trim();
+                sRestOfLine=sParagraph.substring(Header.end()+1).trim();
                 Element content=mDOMDoc.createElement("content");
                 content.setTextContent(sRestOfLine);
                 mCurrentSection.appendChild(content);
+            }
+            String headerMapping=dmdMetadata.LookupIdentiferHeaderMapping(mHeaderText);
+            if(headerMapping!=null)
+            {
+                mCurrentSection.setAttribute("tag", headerMapping);
+                Element eIdentifier=mDOMDoc.createElement(headerMapping);
+                if(sRestOfLine!=null)
+                {
+                    eIdentifier.setTextContent(sRestOfLine);                
+                }
+                mPatientIdentifiers.appendChild(eIdentifier);
             }
          }
          else
