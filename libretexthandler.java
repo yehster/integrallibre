@@ -5,6 +5,7 @@
 package integrallibre;
 import java.io.StringWriter;
 import com.sun.star.uno.UnoRuntime;
+import java.util.HashSet;
 
 import org.w3c.dom.*;
 
@@ -133,7 +134,12 @@ public class libretexthandler {
             mCurrentHeader=mDOMDoc.createElement("header");
             mCurrentHeader.setTextContent(mHeaderText);
             mCurrentSection.appendChild(mCurrentHeader);
-            
+            String headerMapping=dmdMetadata.LookupHeaderMapping(mHeaderText);
+            if(headerMapping!=null)
+            {
+                mCurrentSection.setAttribute("tag", headerMapping);
+                
+            }
             if(sParagraph.length()>Header.end())
             {
                 String sRestOfLine=sParagraph.substring(Header.end()+1).trim();
