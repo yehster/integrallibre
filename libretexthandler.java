@@ -31,10 +31,46 @@ public class libretexthandler {
     protected Element mCurrentSection;
     protected Element mCurrentHeader;
     protected Element mPatientIdentifiers;
+    protected Element mDocumentInfo;
     public libretexthandler(com.sun.star.frame.XDesktop xDesktop, String filename)
     {
         mXTextDocument=OpenTextdocument(xDesktop,filename);
         sFilename=filename;
+        initializeXML();
+    }
+    
+    protected void initializeXML()
+    {
+            //We need a Document
+            try
+            {
+                DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
+                DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
+                mDOMDoc = docBuilder.newDocument();   
+            ////////////////////////
+            //Creating the XML tree
+
+            //create the root element and add it to the document
+             mRoot= mDOMDoc.createElement("transcription");
+             mDOMDoc.appendChild(mRoot);
+             mPatientIdentifiers=mDOMDoc.createElement("PatientIdentifiers");
+             mRoot.appendChild(mPatientIdentifiers);
+
+             
+             mDocumentInfo=mDOMDoc.createElement("DocumentInfo");
+             mRoot.appendChild(mDocumentInfo);
+             
+             mPatientIdentifiers=mDOMDoc.createElement("PatientIdentifiers");
+             mRoot.appendChild(mPatientIdentifiers);
+            
+             mCurrentSection=null;
+             mHeaderText="";             
+            }
+            catch(Exception e)
+            {
+                
+            }
+
     }
     
     
@@ -53,36 +89,13 @@ public class libretexthandler {
             /////////////////////////////
             //Creating an empty XML Document
 
-            //We need a Document
-            try
-            {
-                DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
-                DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
-                mDOMDoc = docBuilder.newDocument();   
-            }
-            catch(Exception e)
-            {
-                
-            }
-            ////////////////////////
-            //Creating the XML tree
-
-            //create the root element and add it to the document
-             mRoot= mDOMDoc.createElement("transcription");
-             mDOMDoc.appendChild(mRoot);
-             mPatientIdentifiers=mDOMDoc.createElement("PatientIdentifiers");
-             mRoot.appendChild(mPatientIdentifiers);
-             
-            System.out.println("create an enumeration of all paragraphs");
-            // create an enumeration access of all paragraphs of a document
             com.sun.star.container.XEnumerationAccess xEnumerationAccess =
                 (com.sun.star.container.XEnumerationAccess)
                     UnoRuntime.queryInterface(
                         com.sun.star.container.XEnumerationAccess.class, xText);
             xParagraphEnumeration = xEnumerationAccess.createEnumeration();
             
-        mCurrentSection=null;
-        mHeaderText="";
+
         try
             {
             while ( xParagraphEnumeration.hasMoreElements() ) {
@@ -179,14 +192,14 @@ public class libretexthandler {
                     {
                         Element mDictator=mDOMDoc.createElement("dictator");
                         mDictator.setTextContent(sParagraph);
-                        mRoot.appendChild(mDictator);
+                        mDocumentInfo.appendChild(mDictator);
                     }
                     else
                     {
                         if(sParagraph.startsWith(dmdMetadata.getDictatorInitials()))
                         {
                             Element Workflow=mDOMDoc.createElement("workflow");
-                            mRoot.appendChild(Workflow);
+                            mDocumentInfo.appendChild(Workflow);
 
                             Element info=mDOMDoc.createElement("info");
                             info.setTextContent(sParagraph);
