@@ -5,7 +5,7 @@
 package integrallibre;
 import java.io.StringWriter;
 import com.sun.star.uno.UnoRuntime;
-import java.util.HashSet;
+import java.util.regex.*;
 
 import org.w3c.dom.*;
 
@@ -37,9 +37,29 @@ public class libretexthandler {
         mXTextDocument=OpenTextdocument(xDesktop,filename);
         sFilename=filename;
         initializeXML();
+        parseFilename();
     }
     
-    protected void initializeXML()
+    private void parseFilename()
+    {
+        Pattern slashes = Pattern.compile("\\\\");
+        Matcher matcher = slashes.matcher(sFilename);
+        String normalized =matcher.replaceAll("/");
+        System.out.println(normalized);
+        Pattern shortFileName = Pattern.compile("/[A-Z0-9]*.DOC$");
+        Matcher mSFN = shortFileName.matcher(normalized);
+        if(mSFN.find())
+        {
+            String sSFN=normalized.substring(mSFN.start()+1,mSFN.end()-4);
+            Element mFileInfo=mDOMDoc.createElement("Filename");
+            mFileInfo.setTextContent(sSFN);
+            mDocumentInfo.appendChild(mFileInfo);
+        }
+    }
+
+
+    
+    private void initializeXML()
     {
             //We need a Document
             try
@@ -53,9 +73,6 @@ public class libretexthandler {
             //create the root element and add it to the document
              mRoot= mDOMDoc.createElement("transcription");
              mDOMDoc.appendChild(mRoot);
-             mPatientIdentifiers=mDOMDoc.createElement("PatientIdentifiers");
-             mRoot.appendChild(mPatientIdentifiers);
-
              
              mDocumentInfo=mDOMDoc.createElement("DocumentInfo");
              mRoot.appendChild(mDocumentInfo);
