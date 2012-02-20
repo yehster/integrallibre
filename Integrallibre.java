@@ -29,6 +29,7 @@ public class Integrallibre {
         {
             System.out.println(e.getMessage());
         }
+        System.out.println(lthHandler.getShortFilename());
         xDesktop.terminate();
         
     }

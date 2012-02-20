@@ -23,6 +23,7 @@ public class libretexthandler {
     
     protected com.sun.star.text.XTextDocument mXTextDocument;
     protected String sFilename;
+    protected String sShortFilename;
     protected docmetadata dmdMetadata;
     protected String mHeaderText;
     protected java.util.ArrayList alHeaders = new java.util.ArrayList();
@@ -50,9 +51,9 @@ public class libretexthandler {
         Matcher mSFN = shortFileName.matcher(normalized);
         if(mSFN.find())
         {
-            String sSFN=normalized.substring(mSFN.start()+1,mSFN.end()-4);
+            sShortFilename=normalized.substring(mSFN.start()+1,mSFN.end()-4);
             Element mFileInfo=mDOMDoc.createElement("Filename");
-            mFileInfo.setTextContent(sSFN);
+            mFileInfo.setTextContent(sShortFilename);
             mDocumentInfo.appendChild(mFileInfo);
         }
     }
@@ -269,6 +270,14 @@ public class libretexthandler {
     }    
     
 
+    public Document getDOM()
+    {
+        return mDOMDoc;
+    }
+    public String getShortFilename()
+    {
+        return sShortFilename;
+    }
     protected String genXMLString() throws Exception
     {
         try
