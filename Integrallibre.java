@@ -21,6 +21,15 @@ public class Integrallibre {
         libretexthandler lthHandler=new libretexthandler(xDesktop,filename);
         docmetadata dmd = new XMLdocmetadata("");
         lthHandler.parse(dmd);
+        try
+        {
+            System.out.println(lthHandler.genXMLString());        
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+        xDesktop.terminate();
         
     }
 

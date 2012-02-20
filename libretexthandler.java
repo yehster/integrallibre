@@ -32,6 +32,7 @@ public class libretexthandler {
     protected Element mCurrentHeader;
     protected Element mPatientIdentifiers;
     protected Element mDocumentInfo;
+
     public libretexthandler(com.sun.star.frame.XDesktop xDesktop, String filename)
     {
         mXTextDocument=OpenTextdocument(xDesktop,filename);
@@ -45,7 +46,6 @@ public class libretexthandler {
         Pattern slashes = Pattern.compile("\\\\");
         Matcher matcher = slashes.matcher(sFilename);
         String normalized =matcher.replaceAll("/");
-        System.out.println(normalized);
         Pattern shortFileName = Pattern.compile("/[A-Z0-9]*.DOC$");
         Matcher mSFN = shortFileName.matcher(normalized);
         if(mSFN.find())
@@ -124,25 +124,16 @@ public class libretexthandler {
                 this.analyzeParagraph(xTextElement);
 
                 }
-            TransformerFactory transfac = TransformerFactory.newInstance();
-            Transformer trans = transfac.newTransformer();
-            trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-            trans.setOutputProperty(OutputKeys.INDENT, "yes");
 
-            //create string from xml tree
-            StringWriter sw = new StringWriter();
-            StreamResult result = new StreamResult(sw);
-            DOMSource source = new DOMSource(mDOMDoc);
-            trans.transform(source, result);
-            String xmlString = sw.toString();
-            System.out.println(xmlString);
+
             }
             
             // Loop through all paragraphs of the document
             catch( Exception e) {
             e.printStackTrace(System.err);
             System.exit(1);
-        }        
+        }
+        
         return true;
     }
     
@@ -277,5 +268,25 @@ public class libretexthandler {
         return aTextDocument;
     }    
     
-    
+
+    protected String genXMLString() throws Exception
+    {
+        try
+        {
+            TransformerFactory transfac = TransformerFactory.newInstance();
+            Transformer trans = transfac.newTransformer();
+            trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            trans.setOutputProperty(OutputKeys.INDENT, "yes");
+            StringWriter sw = new StringWriter();
+            StreamResult result = new StreamResult(sw);
+            DOMSource source = new DOMSource(mDOMDoc);
+            trans.transform(source, result);
+            String xmlString = sw.toString();
+            return xmlString;           
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+    }
 }
