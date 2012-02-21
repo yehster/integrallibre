@@ -31,11 +31,9 @@ public class Integrallibre {
         {
             filename="e:\\MedVocab/MSA01092012002\\MSA01092012001.DOC";
         }
-        System.out.println(filename);
         libretexthandler lthHandler=new libretexthandler(xDesktop,filename);
         docmetadata dmd = new XMLdocmetadata("");
         lthHandler.parse(dmd);
-        System.out.println("parse");
         try
         {
             //
@@ -46,6 +44,7 @@ public class Integrallibre {
             System.out.println(e.getMessage());
             System.exit(1);
         }
+        System.out.println(lthHandler.getShortFilename());
 //        xDesktop.terminate();
         System.exit(0);
         
