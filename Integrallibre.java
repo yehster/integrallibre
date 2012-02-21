@@ -17,19 +17,33 @@ public class Integrallibre {
     public static void main(String[] args) {
         com.sun.star.frame.XDesktop xDesktop = null;
         xDesktop = getDesktop();
-        String filename="e:\\MedVocab/MSA01092012002\\MSA01092012001.DOC";
+        String filename;
+        String path="";
+        if(args.length > 0)
+        {
+            filename=args[0];
+            if(args.length>1)
+            {
+                path=args[1];
+            }
+        }
+        else
+        {
+            filename="e:\\MedVocab/MSA01092012002\\MSA01092012001.DOC";
+        }
         libretexthandler lthHandler=new libretexthandler(xDesktop,filename);
         docmetadata dmd = new XMLdocmetadata("");
         lthHandler.parse(dmd);
         try
         {
-            System.out.println(lthHandler.genXMLString());        
+            //
+            lthHandler.writeXML(path+lthHandler.getShortFilename()+".xml");
+//            System.out.println(lthHandler.genXMLString());        
         }
         catch(Exception e)
         {
             System.out.println(e.getMessage());
         }
-        System.out.println(lthHandler.getShortFilename());
         xDesktop.terminate();
         
     }

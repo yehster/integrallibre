@@ -4,6 +4,7 @@
  */
 package integrallibre;
 import java.io.StringWriter;
+import java.io.FileWriter;
 import com.sun.star.uno.UnoRuntime;
 import java.util.regex.*;
 
@@ -277,6 +278,20 @@ public class libretexthandler {
     public String getShortFilename()
     {
         return sShortFilename;
+    }
+    
+    public void writeXML(String filename) throws Exception
+    {
+            FileWriter fw = new FileWriter(filename);
+            TransformerFactory transfac = TransformerFactory.newInstance();
+            Transformer trans = transfac.newTransformer();
+            trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            trans.setOutputProperty(OutputKeys.INDENT, "yes");
+            StreamResult result = new StreamResult(fw);
+            DOMSource source = new DOMSource(mDOMDoc);
+            trans.transform(source, result);
+            
+        
     }
     protected String genXMLString() throws Exception
     {
