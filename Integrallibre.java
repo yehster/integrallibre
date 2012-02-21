@@ -44,6 +44,7 @@ public class Integrallibre {
         catch(Exception e)
         {
             System.out.println(e.getMessage());
+            System.exit(1);
         }
 //        xDesktop.terminate();
         System.exit(0);

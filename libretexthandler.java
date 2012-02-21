@@ -244,6 +244,7 @@ public class libretexthandler {
         }
         catch( Exception e) {
             e.printStackTrace(System.err);
+            System.exit(1);
         }
         
         return xComponent ;
@@ -263,6 +264,7 @@ public class libretexthandler {
         }
         catch( Exception e) {
             e.printStackTrace(System.err);
+            System.exit(1);
         }
 
         return aTextDocument;
