@@ -31,20 +31,22 @@ public class Integrallibre {
         {
             filename="e:\\MedVocab/MSA01092012002\\MSA01092012001.DOC";
         }
+        System.out.println(filename);
         libretexthandler lthHandler=new libretexthandler(xDesktop,filename);
         docmetadata dmd = new XMLdocmetadata("");
         lthHandler.parse(dmd);
+        System.out.println("parse");
         try
         {
             //
             lthHandler.writeXML(path+lthHandler.getShortFilename()+".xml");
-//            System.out.println(lthHandler.genXMLString());        
         }
         catch(Exception e)
         {
             System.out.println(e.getMessage());
         }
-        xDesktop.terminate();
+//        xDesktop.terminate();
+        System.exit(0);
         
     }
 

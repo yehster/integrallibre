@@ -135,14 +135,12 @@ public class libretexthandler {
             e.printStackTrace(System.err);
             System.exit(1);
         }
-        
         return true;
     }
     
     protected boolean analyzeParagraph(com.sun.star.text.XTextContent xText)
     {
         String sParagraph=xText.getAnchor().getString().trim();
-        //System.out.println(sParagraph);
         boolean headerMatch=false;
         java.util.regex.Matcher Header=null;
         for(Integer idx=0;(idx<dmdMetadata.getHeadersPatterns().size()) && !headerMatch;idx++)
@@ -290,7 +288,7 @@ public class libretexthandler {
             StreamResult result = new StreamResult(fw);
             DOMSource source = new DOMSource(mDOMDoc);
             trans.transform(source, result);
-            
+            fw.close();
         
     }
     protected String genXMLString() throws Exception
