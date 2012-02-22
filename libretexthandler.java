@@ -53,6 +53,7 @@ public class libretexthandler {
         if(mSFN.find())
         {
             sShortFilename=normalized.substring(mSFN.start()+1,mSFN.end()-4);
+            sShortFilename=sShortFilename.trim();
             Element mFileInfo=mDOMDoc.createElement("Filename");
             mFileInfo.setTextContent(sShortFilename);
             mDocumentInfo.appendChild(mFileInfo);

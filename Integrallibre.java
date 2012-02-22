@@ -37,7 +37,8 @@ public class Integrallibre {
         try
         {
             //
-            lthHandler.writeXML(path+lthHandler.getShortFilename()+".xml");
+            
+            lthHandler.writeXML(path.trim()+lthHandler.getShortFilename()+".xml");
         }
         catch(Exception e)
         {
