@@ -29,7 +29,7 @@ public class Integrallibre {
         }
         else
         {
-            filename="e:\\MedVocab/MSA01092012002\\MSA01092012001.DOC";
+            filename="e:\\MedVocab/MSA01092012002\\MSA01092012024_2.DOC";
         }
         libretexthandler lthHandler=new libretexthandler(xDesktop,filename);
         docmetadata dmd = new XMLdocmetadata("");

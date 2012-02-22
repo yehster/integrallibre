@@ -13,7 +13,7 @@ public class XMLdocmetadata implements docmetadata {
     java.util.HashMap mIdentifierHeaderMappings = new java.util.HashMap();
     public XMLdocmetadata(String filename)
     {
-        mHeaderPatterns.add(java.util.regex.Pattern.compile("^[A-Z]+[/#-]?\\s??[A-Z]*:"));
+        mHeaderPatterns.add(java.util.regex.Pattern.compile("^[A-Z]+[/#-]?\\s??[A-Z]*\\s??[A-Z]*:"));
         initializeIdentifierHeaderMappings();
 
     }
