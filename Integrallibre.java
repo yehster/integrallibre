@@ -48,7 +48,7 @@ public class Integrallibre {
         }
         System.out.println(path);
         System.out.println(lthHandler.getShortFilename());
-        //xDesktop.terminate();
+//        xDesktop.terminate();
         System.exit(0);
         
     }
@@ -66,9 +66,9 @@ public class Integrallibre {
             // get the remote office service manager
             xMCF = xContext.getServiceManager();
             if( xMCF != null ) {
-
-                Object oDesktop = xMCF.createInstanceWithContext(
-                    "com.sun.star.frame.Desktop", xContext);
+                String[] arguments={"--headless","--nologo"};
+                Object oDesktop = xMCF.createInstanceWithArgumentsAndContext(
+                    "com.sun.star.frame.Desktop", arguments,xContext);
                 xDesktop = (com.sun.star.frame.XDesktop) UnoRuntime.queryInterface(
                     com.sun.star.frame.XDesktop.class, oDesktop);
             }
