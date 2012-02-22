@@ -25,11 +25,12 @@ public class Integrallibre {
             if(args.length>1)
             {
                 path=args[1];
+                path=path.trim();
             }
         }
         else
         {
-            filename="e:\\MedVocab/MSA01092012002\\MSA01092012024_2.DOC";
+            filename="e:\\MedVocab/MSA01092012002\\MSA01092012001.DOC";
         }
         libretexthandler lthHandler=new libretexthandler(xDesktop,filename);
         docmetadata dmd = new XMLdocmetadata("");
@@ -38,15 +39,16 @@ public class Integrallibre {
         {
             //
             
-            lthHandler.writeXML(path.trim()+lthHandler.getShortFilename()+".xml");
+            lthHandler.writeXML(path+lthHandler.getShortFilename()+".xml");
         }
         catch(Exception e)
         {
             System.out.println(e.getMessage());
             System.exit(1);
         }
+        System.out.println(path);
         System.out.println(lthHandler.getShortFilename());
-//        xDesktop.terminate();
+        //xDesktop.terminate();
         System.exit(0);
         
     }
@@ -64,7 +66,6 @@ public class Integrallibre {
             // get the remote office service manager
             xMCF = xContext.getServiceManager();
             if( xMCF != null ) {
-                System.out.println("Connected to a running office ...");
 
                 Object oDesktop = xMCF.createInstanceWithContext(
                     "com.sun.star.frame.Desktop", xContext);

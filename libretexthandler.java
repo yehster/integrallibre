@@ -23,6 +23,7 @@ import javax.xml.transform.stream.*;
 public class libretexthandler {
     
     protected com.sun.star.text.XTextDocument mXTextDocument;
+    protected com.sun.star.lang.XComponent xComponent = null;
     protected String sFilename;
     protected String sShortFilename;
     protected docmetadata dmdMetadata;
@@ -136,6 +137,7 @@ public class libretexthandler {
             e.printStackTrace(System.err);
             System.exit(1);
         }
+        xComponent.dispose();
         return true;
     }
     
@@ -223,12 +225,11 @@ public class libretexthandler {
         return true;
     }
 
-    protected static com.sun.star.lang.XComponent OpenDocument(
+    protected com.sun.star.lang.XComponent OpenDocument(
         com.sun.star.frame.XDesktop xDesktop,
         String sFilename )
     {
         String sURL="file:///"+sFilename;
-        com.sun.star.lang.XComponent xComponent = null;
         com.sun.star.frame.XComponentLoader xComponentLoader = null;
         com.sun.star.beans.PropertyValue xValues[] =
             new com.sun.star.beans.PropertyValue[1];
@@ -251,7 +252,7 @@ public class libretexthandler {
         return xComponent ;
     }
     
-    protected static com.sun.star.text.XTextDocument OpenTextdocument(
+    protected com.sun.star.text.XTextDocument OpenTextdocument(
         com.sun.star.frame.XDesktop xDesktop, String sFilename )
     {
         com.sun.star.text.XTextDocument aTextDocument = null;
