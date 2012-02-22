@@ -48,7 +48,7 @@ public class libretexthandler {
         Pattern slashes = Pattern.compile("\\\\");
         Matcher matcher = slashes.matcher(sFilename);
         String normalized =matcher.replaceAll("/");
-        Pattern shortFileName = Pattern.compile("/[A-Z0-9]*_+[0-9]*.DOC$");
+        Pattern shortFileName = Pattern.compile("/[A-Z0-9]*_??[0-9]*.DOC$");
         Matcher mSFN = shortFileName.matcher(normalized);
         if(mSFN.find())
         {
