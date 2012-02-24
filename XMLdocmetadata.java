@@ -11,6 +11,8 @@ package integrallibre;
 public class XMLdocmetadata implements docmetadata {
 
     java.util.HashMap mIdentifierHeaderMappings = new java.util.HashMap();
+    java.util.HashMap mDocumentInfoHeaderMappings = new java.util.HashMap();
+  
     public XMLdocmetadata(String filename)
     {
         mHeaderPatterns.add(java.util.regex.Pattern.compile("^[A-Z]+[/#-]?\\s??[A-Z]*\\s??[A-Z]*:"));
@@ -27,6 +29,8 @@ public class XMLdocmetadata implements docmetadata {
         mIdentifierHeaderMappings.put("OFFICE VISIT","DateOfService");
         mIdentifierHeaderMappings.put("DOI","DateOfInjury");
         
+        mDocumentInfoHeaderMappings.put("REFERRING PHYSICIAN","ReferringPhysician");
+        mDocumentInfoHeaderMappings.put("EMP","Employer");
     }
     protected java.util.ArrayList mHeaderPatterns = new java.util.ArrayList();
     public java.util.List getHeadersPatterns()
@@ -46,6 +50,10 @@ public class XMLdocmetadata implements docmetadata {
     public String LookupIdentiferHeaderMapping(String header)
     {
         return (String)mIdentifierHeaderMappings.get(header);
+    }
+    public String LookupDocumentInfoHeaderMapping(String header)
+    {
+        return (String)mDocumentInfoHeaderMappings.get(header);        
     }
     
 }

@@ -180,6 +180,14 @@ public class libretexthandler {
                 }
                 mPatientIdentifiers.appendChild(eIdentifier);
             }
+            else
+            {
+                headerMapping=dmdMetadata.LookupDocumentInfoHeaderMapping(mHeaderText);
+                if(headerMapping!=null)
+                {
+                    mCurrentSection.setAttribute("tag", headerMapping);
+                }
+            }
          }
          else
         {
