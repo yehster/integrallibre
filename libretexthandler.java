@@ -202,8 +202,19 @@ public class libretexthandler {
                     if(sParagraph.startsWith(dmdMetadata.getDictatorFullName()))
                     {
                         Element mDictator=mDOMDoc.createElement("dictator");
-                        mDictator.setTextContent(sParagraph);
+                        String[] aDictator = sParagraph.split(",");
+                        String[] aName = aDictator[0].split(" ");
                         mDocumentInfo.appendChild(mDictator);
+                        
+                        Element fName=mDOMDoc.createElement("FirstName");
+                        fName.setTextContent(aName[0]);
+                        mDictator.appendChild(fName);
+                        
+                        Element lName=mDOMDoc.createElement("LastName");
+                        lName.setTextContent(aName[aName.length-1]);
+                        mDictator.appendChild(lName);
+                        
+                        
                     }
                     else
                     {
